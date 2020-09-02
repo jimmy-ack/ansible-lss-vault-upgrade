@@ -1,2 +1,4 @@
 ---
 # defaults file for ansible-lss-vault-upgrade
+
+vault_version: 1.4.3
