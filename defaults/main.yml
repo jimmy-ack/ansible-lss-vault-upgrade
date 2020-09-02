@@ -2,3 +2,4 @@
 # defaults file for ansible-lss-vault-upgrade
 
 vault_version: 1.4.3
+vault_bin_path: "/usr/local/bin"
