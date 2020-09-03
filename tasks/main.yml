@@ -9,3 +9,8 @@
 - name: Ensure required OS packages are installed
   include: requirements.yml
   when: vault_install_required == true
+
+# Upgrade Vault if required
+- name: Upgrade vault
+  include: upgrade.yml
+  when: vault_upgrade_required == true
