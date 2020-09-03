@@ -2,15 +2,15 @@
 # handlers file for ansible-lss-vault-upgrade
 - name: start vault
   systemd:
-    state: started
     name: vault
+    state: started
 
 - name: stop vault
   systemd:
-    state: stopped
     name: vault
+    state: stopped
 
 - name: restart vault
   systemd:
-    state: restarted
     name: vault
+    state: restarted
