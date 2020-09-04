@@ -28,7 +28,7 @@
 
 # Checking if vault already installed in the expected version
 - name: Check if vault is already installed
-  command: "{{ vault_bin_path }}/vault version | awk '{print $2}' | sed 's/^v\\(.*\\)/\\1/'"
+  shell: "{{ vault_bin_path }}/vault version | awk '{print $2}' | sed 's/^v\\(.*\\)/\\1/'"
   register: vault_install_check
   changed_when: false
   ignore_errors: true
