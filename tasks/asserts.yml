@@ -39,6 +39,11 @@
   set_fact:
     vault_install_required: "{{ vault_install_check is failed }}"
 
+- name: Compute vault version in format x.y.z (eg- 1.4.2)
+  set_fact:
+    vault_installed_version: "{{ vault_install_check.stdout.split(' ')[1] | regex_replace('^v(.*)$', '\\1') }}"
+  when: (vault_install_required is defined) and (vault_install_required == false)
+
 # - name: Compute target vault version
 #   set_fact:
 #     vault_target_version: "Vault v{{ vault_version }}"
@@ -46,4 +51,4 @@
 - name: Compute if a vault upgrade is required
   set_fact:
     vault_upgrade_required: true
-  when: (vault_install_required is defined) and (vault_install_required == false) and ("{{ vault_install_check.split(' ')[1] | regex_replace('^v(.*)$', '\\1') }}" != vault_version)
+  when: (vault_install_required is defined) and (vault_install_required == false) and (vault_installed_version != vault_version)
