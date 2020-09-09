@@ -1,2 +1,16 @@
 ---
 # tasks file for ansible-lss-vault-upgrade
+
+# Checking first if environment is compatible with this role and if vault is already installed on nodes
+- name: Ensure compatibility with this role and checking if vault is already installed
+  include: asserts.yml
+
+# Ensure requirements are in installed on nodes
+- name: Ensure required OS packages are installed
+  include: requirements.yml
+  when: vault_install_required == true
+
+# Upgrade Vault if required
+- name: Upgrade vault
+  include: upgrade.yml
+  when: vault_upgrade_required is defined

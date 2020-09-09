@@ -1,0 +1,65 @@
+---
+- name: stop vault
+  systemd:
+    state: stopped
+    name: vault
+
+- name: delete vault binary
+  file:
+    path: "{{ vault_bin_path }}/vault"
+    state: absent
+
+- name: download & install vault
+  block:
+    - name: Ensure Vault group is created
+      group:
+        name: "{{ vault_group }}"
+        state: present
+
+    - name: Ensure Vault user is created
+      user:
+        name: "{{ vault_user }}"
+        comment: "{{ vault_user_comment }}"
+        group: "{{ vault_group }}"
+        system: true
+
+    - name: Ensure remote vault temporary dir exists
+      file:
+        path: /tmp/vault
+        state: directory
+
+    - name: Ensure vault package checksum file is not present
+      file:
+        path: "/tmp/vault/{{ vault_shasums }}"
+        state: absent
+
+    - name: Ensure vault package file is not present
+      file:
+        path: "/tmp/vault/{{ vault_pkg }}"
+        state: absent
+
+    - name: Get Vault package checksum file
+      get_url:
+        url: "{{ vault_checksum_file_url }}"
+        dest: "/tmp/vault/{{ vault_shasums }}"
+
+    - name: Get Vault package checksum
+      shell: "grep {{ vault_pkg }} /tmp/vault/{{ vault_shasums }}"
+      register: vault_sha256
+
+    - name: "Download Vault"
+      get_url:
+        url: "{{ vault_zip_url }}"
+        dest: "/tmp/vault/{{ vault_pkg }}"
+        checksum: "sha256:{{ vault_sha256.stdout.split(' ')|first }}"
+        timeout: "42"
+
+    - name: Unarchive Vault and install binary
+      unarchive:
+        remote_src: true
+        src: "/tmp/vault/{{ vault_pkg }}"
+        dest: "{{ vault_bin_path }}"
+        owner: "{{ vault_user }}"
+        group: "{{ vault_group }}"
+        mode: "0755"
+      notify: start vault
