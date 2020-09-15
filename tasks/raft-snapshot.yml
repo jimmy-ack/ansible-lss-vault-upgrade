@@ -5,4 +5,4 @@
     state: absent
 
 - name: take a raft snapshot
-  shell: "vault operator raft snapshot save raft.snap"
+  shell: "{{ vault_bin_path }}/vault operator raft snapshot save raft.snap"
