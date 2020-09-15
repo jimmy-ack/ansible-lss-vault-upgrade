@@ -6,4 +6,4 @@
 
 - name: take a raft snapshot
   shell: "source ~/.bashrc && {{ vault_bin_path }}/vault operator raft snapshot save raft.snap"
-  
+  ignore_errors: true
