@@ -1,6 +1,6 @@
 ---
 # defaults file for ansible-lss-vault-upgrade
-
+vault_flavor: oss # values can be: oss (default) / ent / prem / prem.hsm
 vault_bin_path: "/usr/local/bin"
 vault_user: "vault"
 vault_group: "bin"
