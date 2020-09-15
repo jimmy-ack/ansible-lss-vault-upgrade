@@ -5,5 +5,5 @@
     state: absent
 
 - name: take a raft snapshot
-  shell: "bash -c \"{{ vault_bin_path }}/vault operator raft snapshot save raft.snap\""
+  shell: "source ~/.bashrc && {{ vault_bin_path }}/vault operator raft snapshot save raft.snap"
   
