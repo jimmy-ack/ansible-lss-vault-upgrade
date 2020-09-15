@@ -10,6 +10,10 @@
   include: requirements.yml
   when: vault_install_required == true
 
+# Snapshot raft before upgrading
+- name: Take a snapshot of the raft storage backend
+  include: raft-snapshot.yml
+
 # Upgrade Vault if required
 - name: Upgrade vault
   include: upgrade.yml

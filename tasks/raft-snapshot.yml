@@ -1,0 +1,8 @@
+---
+- name: rm previous raft snapshot
+  file:
+    path: "/home/centos/raft.snap"
+    state: absent
+
+- name: take a raft snapshot
+  shell: "vault operator raft snapshot save raft.snap"
