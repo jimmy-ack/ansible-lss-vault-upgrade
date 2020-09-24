@@ -6,7 +6,7 @@
 
 - name: setup raft filename based on time
   set_fact:
-    raft_date: "{{ ansible_date_time.epoch }}-({{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }})"
+    raft_date: "{{ ansible_date_time.epoch }}-{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}"
 
 - name: take a raft snapshot
   shell: "source ~/.bashrc && {{ vault_bin_path }}/vault operator raft snapshot save raft-{{ raft_date }}.snap"
