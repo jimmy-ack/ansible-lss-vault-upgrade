@@ -1,8 +1,8 @@
 ---
-- name: rm previous raft snapshot
-  file:
-    path: "/home/centos/raft.snap"
-    state: absent
+# - name: rm previous raft snapshot
+#   file:
+#     path: "/home/centos/raft.snap"
+#     state: absent
 
 - name: setup raft filename based on time
   set_fact:
